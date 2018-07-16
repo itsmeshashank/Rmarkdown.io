@@ -1,0 +1,125 @@
+---
+title: Shiny Integration with RMarkdown
+author: Shashank Jain
+output: html_document
+runtime: shiny
+---
+  
+  #Intoduction
+  
+  R Markdown provides an unified authoring framework for data science, combining your code, its results, and your prose commentary. R Markdown documents are fully reproducible and support dozens of output formats, like PDFs, Word files, slideshows, and more.R Markdown provides an authoring framework for data science. You can use a single R Markdown file to both.
+
+R Markdown integrates a number of R packages and external tools. This means that help is, by-and-large, not available through ?. Instead, as you work through this chapter, and use R Markdown in the future, keep these resources close to hand:
+  
+  #select input
+  
+  ```{r select-input}
+
+selectInput(
+  inputId = "dropdown",label = "Please make a selection",
+  choices = list("Option 1"= "You have selected option 1",
+                 "Option 2"= "You have selected option 2",
+                 "Option 3"= "You have selected option 3"
+  )
+)
+```
+
+```{r- print select input}
+
+renderText(input$dropdown)
+```
+
+
+# slider input
+
+```{r select- slider}
+
+sliderInput(inputId = "slider",label = "This is a slider",
+            max = 10,min = 0,value = 5
+)
+
+sliderInput(inputId = "slider2",label = "This is a double-sided slider",
+            max = 10,min = 0,value = c(4,7)
+            
+)
+```
+
+#checkbox input
+
+```{r checkbox}
+checkboxInput(inputId = "checkbox",label = "This is a single checkbox"
+              
+)
+
+checkboxGroupInput(inputId = "checkbox2",label = "This is a multiple checkbox",
+                   choices = c("A","B","C")
+                   
+)
+```
+
+#Radio button
+
+```{r radio button}
+
+radioButtons(inputId = "radiobutton",label = "This is a radio button",
+             choices = c("A","B","C")
+)
+```
+
+#Date input
+
+```{r date-input}
+dateInput(inputId = "date",label = "Date selector")
+
+dateRangeInput(inputId = "daterange",label = "Please select dates",
+               format = 'mm/dd/yyyy'
+               
+)
+```
+
+#Text input
+
+```{r}
+textInput(inputId = "text",label = "Space to enter text")
+
+textAreaInput(inputId = "inputarea",label = "Space to enter paragraph")
+
+passwordInput(inputId = "password",label = "Please enter your password")
+```
+
+#Render text
+
+```{r}
+renderPrint(input$text)
+
+renderText(input$text)
+```
+
+#Render Data
+
+```{r render- data}
+
+DT::renderDataTable(mtcars)
+
+```
+
+#Plotting
+
+```{r}
+renderPlot(hist(mtcars$mpg))
+```
+
+```{r}
+selectInput(inputId = "plotcolumn",label = "Choose a column",
+            choices = names(mtcars)
+)
+
+sliderInput(inputId = "breaks",label = "Choose number of breaks",
+            min = 5,max = 20,value = 10)
+```
+
+```{r}
+renderPlot(hist(mtcars[,input$plotcolumn],breaks = input$breaks))
+```
+
+
